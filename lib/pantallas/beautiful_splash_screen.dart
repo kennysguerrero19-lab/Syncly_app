@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:async';
 
-const logoUrl = 'https://i.imgur.com/your_logo.png'; // Cambia por la URL de tu logo
+const logoUrl = 'lib/assets/logo_syncly.png'; // Logo local
 
 class BeautifulSplashScreen extends StatefulWidget {
   @override
@@ -57,13 +57,13 @@ class _BeautifulSplashScreenState extends State<BeautifulSplashScreen> with Sing
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       gradient: LinearGradient(
-                        colors: [Colors.blueAccent, Colors.lightBlueAccent],
+                        colors: [Color(0xFF3AB4F2), Color(0xFFB36AFF)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blueAccent.withOpacity(0.3),
+                          color: Color(0xFF3AB4F2).withOpacity(0.3),
                           blurRadius: 32,
                           offset: Offset(0, 12),
                         ),
@@ -71,8 +71,8 @@ class _BeautifulSplashScreenState extends State<BeautifulSplashScreen> with Sing
                     ),
                     child: CircleAvatar(
                       radius: 64,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: NetworkImage(logoUrl),
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage(logoUrl),
                     ),
                   ),
                   SizedBox(height: 36),

@@ -29,38 +29,27 @@ class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
                   child: Container(
                     decoration: BoxDecoration(
                       gradient: LinearGradient(
-                        colors: [Colors.blueAccent, Colors.lightBlueAccent],
+                        colors: [Color(0xFF3AB4F2), Color(0xFFB36AFF)],
                         begin: Alignment.topLeft,
                         end: Alignment.bottomRight,
                       ),
                       shape: BoxShape.circle,
                       boxShadow: [
                         BoxShadow(
-                          color: Colors.blueAccent.withOpacity(0.4),
-                          blurRadius: 24,
-                          offset: Offset(0, 8),
+                          color: Color(0xFF3AB4F2).withOpacity(0.4),
+                          blurRadius: 28,
+                          offset: Offset(0, 10),
                         ),
                       ],
                     ),
                     child: CircleAvatar(
                       radius: 44,
-                      backgroundColor: Colors.transparent,
-                      backgroundImage: _avatarUrl != null ? NetworkImage(_avatarUrl!) : null,
-                      child: _avatarUrl == null ? Icon(Icons.person_add, size: 54, color: Colors.white) : null,
+                      backgroundColor: Colors.white,
+                      backgroundImage: AssetImage('lib/assets/logo_syncly.png'),
                     ),
                   ),
                 ),
-                SizedBox(height: 16),
-                TextButton.icon(
-                  icon: Icon(Icons.image, color: Colors.blueAccent),
-                  label: Text('Seleccionar avatar', style: TextStyle(color: Colors.blueAccent)),
-                  onPressed: () {
-                    setState(() {
-                      _avatarUrl = 'https://i.pravatar.cc/150?img=3';
-                    });
-                  },
-                ),
-                SizedBox(height: 16),
+                SizedBox(height: 24),
                 Card(
                   color: Color(0xFF142A47),
                   elevation: 16,
