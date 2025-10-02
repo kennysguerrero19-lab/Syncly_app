@@ -9,6 +9,9 @@ class _BeautifulLoginScreenState extends State<BeautifulLoginScreen> {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   bool isLoading = false;
+  String? errorMessage;
+  bool emailError = false;
+  bool passwordError = false;
 
   @override
   Widget build(BuildContext context) {
@@ -21,6 +24,14 @@ class _BeautifulLoginScreenState extends State<BeautifulLoginScreen> {
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
+                if (errorMessage != null)
+                  Padding(
+                    padding: const EdgeInsets.only(bottom: 16.0),
+                    child: Text(
+                      errorMessage!,
+                      style: TextStyle(color: Colors.redAccent, fontWeight: FontWeight.bold, fontSize: 16),
+                    ),
+                  ),
                 Hero(
                   tag: 'logo',
                   child: Container(
@@ -70,6 +81,7 @@ class _BeautifulLoginScreenState extends State<BeautifulLoginScreen> {
                             fillColor: Color(0xFF1B3556),
                             enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Colors.blueAccent, width: 1.2)),
                             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2)),
+                            errorText: emailError ? 'Ingresa tu correo' : null,
                           ),
                           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
                         ),
@@ -85,6 +97,7 @@ class _BeautifulLoginScreenState extends State<BeautifulLoginScreen> {
                             fillColor: Color(0xFF1B3556),
                             enabledBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Colors.blueAccent, width: 1.2)),
                             focusedBorder: OutlineInputBorder(borderRadius: BorderRadius.circular(24), borderSide: BorderSide(color: Colors.lightBlueAccent, width: 2)),
+                            errorText: passwordError ? 'Ingresa tu contraseña' : null,
                           ),
                           style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
                         ),
@@ -104,6 +117,23 @@ class _BeautifulLoginScreenState extends State<BeautifulLoginScreen> {
                                       shadowColor: Colors.lightBlueAccent,
                                     ),
                                     onPressed: () {
+                                      setState(() {
+                                        errorMessage = null;
+                                        emailError = false;
+                                        passwordError = false;
+                                      });
+                                      final email = emailController.text.trim();
+                                      final password = passwordController.text.trim();
+                                      bool hasError = false;
+                                      if (email.isEmpty) {
+                                        setState(() { emailError = true; });
+                                        hasError = true;
+                                      }
+                                      if (password.isEmpty) {
+                                        setState(() { passwordError = true; });
+                                        hasError = true;
+                                      }
+                                      if (hasError) return;
                                       setState(() { isLoading = true; });
                                       Future.delayed(Duration(seconds: 1), () {
                                         setState(() { isLoading = false; });
