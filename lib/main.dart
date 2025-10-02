@@ -11,6 +11,9 @@ import 'pantallas/beautiful_chat_screen.dart';
 import 'pantallas/beautiful_notifications_screen.dart';
 import 'pantallas/beautiful_settings_screen.dart';
 import 'pantallas/beautiful_profile_screen.dart';
+import 'pantallas/beautiful_privacy_screen.dart';
+import 'pantallas/beautiful_help_center_screen.dart';
+import 'pantallas/beautiful_support_chat_screen.dart';
 
 void main() {
   runApp(MainApp());
@@ -36,6 +39,9 @@ class MainApp extends StatelessWidget {
         '/settings': (context) => BeautifulSettingsScreen(),
         '/profile': (context) => BeautifulProfileScreen(),
         '/project_details': (context) => BeautifulProjectDetailsScreen(),
+  '/privacy': (context) => BeautifulPrivacyScreen(),
+  '/help_center': (context) => BeautifulHelpCenterScreen(),
+  '/support_chat': (context) => BeautifulSupportChatScreen(),
       },
     );
   }

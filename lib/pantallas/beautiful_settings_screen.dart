@@ -80,9 +80,7 @@ class _BeautifulSettingsScreenState extends State<BeautifulSettingsScreen> {
                   title: Text('Privacidad y Seguridad', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
                   trailing: Icon(Icons.arrow_forward_ios, color: Colors.white54, size: 20),
                   onTap: () {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      SnackBar(content: Text('Función no implementada')),
-                    );
+                    Navigator.pushNamed(context, '/privacy');
                   },
                 ),
               ],
@@ -140,9 +138,7 @@ class _BeautifulSettingsScreenState extends State<BeautifulSettingsScreen> {
               title: Text('Centro de Ayuda', style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500)),
               trailing: Icon(Icons.arrow_forward_ios, color: Colors.white54, size: 20),
               onTap: () {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Función no implementada')),
-                );
+                Navigator.pushNamed(context, '/help_center');
               },
             ),
           ),
