@@ -27,6 +27,107 @@ class _BeautifulProjectsScreenState extends State<BeautifulProjectsScreen> {
       ),
     );
   }
+
+  Future<void> showEditProjectDialog(int idx) async {
+    final project = projects[idx];
+    final titleController = TextEditingController(text: project['title']);
+    final descController = TextEditingController(text: project['desc']);
+    final tagsController = TextEditingController(text: project['tags'].join(', '));
+    double progress = project['progress'];
+
+    await showDialog(
+      context: context,
+      builder: (context) {
+        return AlertDialog(
+          backgroundColor: Color(0xFF142A47),
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+          title: Text('Editar proyecto', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+          content: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                TextField(
+                  controller: titleController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: 'Nombre',
+                    labelStyle: TextStyle(color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF1B3556),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                ),
+                SizedBox(height: 12),
+                TextField(
+                  controller: descController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: 'Descripción',
+                    labelStyle: TextStyle(color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF1B3556),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                  maxLines: 2,
+                ),
+                SizedBox(height: 12),
+                TextField(
+                  controller: tagsController,
+                  style: TextStyle(color: Colors.white),
+                  decoration: InputDecoration(
+                    labelText: 'Tags (separados por coma)',
+                    labelStyle: TextStyle(color: Colors.white70),
+                    filled: true,
+                    fillColor: Color(0xFF1B3556),
+                    border: OutlineInputBorder(borderRadius: BorderRadius.circular(14)),
+                  ),
+                ),
+                SizedBox(height: 12),
+                Text('Progreso', style: TextStyle(color: Colors.white70)),
+                Slider(
+                  value: progress,
+                  min: 0,
+                  max: 1,
+                  divisions: 100,
+                  label: '${(progress * 100).toInt()}%',
+                  activeColor: Colors.blueAccent,
+                  inactiveColor: Colors.white24,
+                  onChanged: (val) {
+                    progress = val;
+                    // Usar setState del dialog
+                    (context as Element).markNeedsBuild();
+                  },
+                ),
+              ],
+            ),
+          ),
+          actions: [
+            TextButton(
+              child: Text('Cancelar', style: TextStyle(color: Colors.redAccent)),
+              onPressed: () => Navigator.of(context).pop(),
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent),
+              child: Text('Guardar', style: TextStyle(color: Colors.white)),
+              onPressed: () {
+                setState(() {
+                  project['title'] = titleController.text.trim();
+                  project['desc'] = descController.text.trim();
+                  project['tags'] = tagsController.text.split(',').map((t) => t.trim()).where((t) => t.isNotEmpty).toList();
+                  project['progress'] = progress;
+                });
+                Navigator.of(context).pop();
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(content: Text('Proyecto editado', style: TextStyle(color: Colors.white)), backgroundColor: Colors.blueAccent),
+                );
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
   List<Map<String, dynamic>> projects = [
     {
       'title': 'App Educativa',
@@ -185,9 +286,7 @@ class _BeautifulProjectsScreenState extends State<BeautifulProjectsScreen> {
                                               'Cancelar',
                                             );
                                             if (confirm == true) {
-                                              ScaffoldMessenger.of(context).showSnackBar(
-                                                SnackBar(content: Text('Formulario de edición próximamente', style: TextStyle(color: Colors.white)), backgroundColor: Colors.blueAccent),
-                                              );
+                                              await showEditProjectDialog(idx);
                                             }
                                           }
                                         },
