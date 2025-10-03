@@ -45,21 +45,74 @@ class BeautifulHelpCenterScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       ListTile(
+                        leading: Icon(Icons.menu_book, color: Colors.greenAccent, size: 30),
+                        title: Text('Guía de uso', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                        subtitle: Text('Descubre cómo crear proyectos, colaborar y gestionar tu perfil en Syncly. Accede a tutoriales y tips para aprovechar todas las funciones.', style: TextStyle(color: Colors.white70)),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              backgroundColor: Color(0xFF232323),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                              title: Text('Guía de uso', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('1. Crea tu proyecto desde la pantalla principal.\n', style: TextStyle(color: Colors.white70)),
+                                    Text('2. Invita colaboradores y asigna roles.\n', style: TextStyle(color: Colors.white70)),
+                                    Text('3. Gestiona tareas y mensajes en tiempo real.\n', style: TextStyle(color: Colors.white70)),
+                                    Text('4. Configura la privacidad y visibilidad de tu perfil y proyectos.\n', style: TextStyle(color: Colors.white70)),
+                                    Text('5. Consulta notificaciones y ayuda desde el menú.\n', style: TextStyle(color: Colors.white70)),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: Text('Cerrar', style: TextStyle(color: Colors.blueAccent)),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
+                      ),
+                      Divider(color: Colors.white12),
+                      ListTile(
                         leading: Icon(Icons.question_answer, color: Colors.purpleAccent, size: 30),
                         title: Text('Preguntas frecuentes', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Respuestas rápidas a las dudas más comunes.', style: TextStyle(color: Colors.white70)),
-                      ),
-                      Divider(color: Colors.white12),
-                      ListTile(
-                        leading: Icon(Icons.contact_support, color: Colors.blueAccent, size: 30),
-                        title: Text('Contacto de soporte', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Estamos aquí para ayudarte en lo que necesites.', style: TextStyle(color: Colors.white70)),
-                      ),
-                      Divider(color: Colors.white12),
-                      ListTile(
-                        leading: Icon(Icons.menu_book, color: Colors.greenAccent, size: 30),
-                        title: Text('Guías de uso', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Aprende a usar la app paso a paso.', style: TextStyle(color: Colors.white70)),
+                        subtitle: Text('¿Cómo recupero mi contraseña?\n¿Puedo colaborar en varios proyectos?\n¿Mis datos están seguros?', style: TextStyle(color: Colors.white70)),
+                        onTap: () {
+                          showDialog(
+                            context: context,
+                            builder: (context) => AlertDialog(
+                              backgroundColor: Color(0xFF232323),
+                              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+                              title: Text('Preguntas frecuentes', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                              content: SingleChildScrollView(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text('¿Cómo recupero mi contraseña?', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                    Text('Puedes solicitar un enlace de recuperación desde la pantalla de login.\n', style: TextStyle(color: Colors.white70)),
+                                    SizedBox(height: 12),
+                                    Text('¿Puedo colaborar en varios proyectos?', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                    Text('Sí, puedes unirte y gestionar múltiples proyectos desde tu perfil.\n', style: TextStyle(color: Colors.white70)),
+                                    SizedBox(height: 12),
+                                    Text('¿Mis datos están seguros?', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                    Text('Sí, usamos cifrado y no compartimos tu información con terceros.', style: TextStyle(color: Colors.white70)),
+                                  ],
+                                ),
+                              ),
+                              actions: [
+                                TextButton(
+                                  child: Text('Cerrar', style: TextStyle(color: Colors.blueAccent)),
+                                  onPressed: () => Navigator.pop(context),
+                                ),
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     ],
                   ),

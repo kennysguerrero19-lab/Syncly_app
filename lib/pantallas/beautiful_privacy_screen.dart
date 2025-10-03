@@ -54,25 +54,19 @@ class BeautifulPrivacyScreen extends StatelessWidget {
                       ListTile(
                         leading: Icon(Icons.lock, color: Colors.blueAccent, size: 30),
                         title: Text('Datos cifrados', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Toda tu información está protegida y cifrada.', style: TextStyle(color: Colors.white70)),
+                        subtitle: Text('Toda tu información está protegida y cifrada con los más altos estándares de seguridad.', style: TextStyle(color: Colors.white70)),
                       ),
                       Divider(color: Colors.white12),
                       ListTile(
                         leading: Icon(Icons.visibility, color: Colors.purpleAccent, size: 30),
                         title: Text('Control de visibilidad', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Decide quién puede ver tus proyectos y tu perfil.', style: TextStyle(color: Colors.white70)),
-                      ),
-                      Divider(color: Colors.white12),
-                      ListTile(
-                        leading: Icon(Icons.delete_forever, color: Colors.redAccent, size: 30),
-                        title: Text('Elimina tu cuenta', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('Puedes eliminar tu cuenta y tus datos en cualquier momento.', style: TextStyle(color: Colors.white70)),
+                        subtitle: Text('Tú decides quién puede ver tus proyectos y tu perfil. Configura tu privacidad fácilmente.', style: TextStyle(color: Colors.white70)),
                       ),
                       Divider(color: Colors.white12),
                       ListTile(
                         leading: Icon(Icons.shield, color: Colors.greenAccent, size: 30),
                         title: Text('Sin terceros', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-                        subtitle: Text('No compartimos tu información con nadie más.', style: TextStyle(color: Colors.white70)),
+                        subtitle: Text('No compartimos tu información con nadie más. Tu privacidad es nuestra prioridad.', style: TextStyle(color: Colors.white70)),
                       ),
                     ],
                   ),
