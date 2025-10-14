@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
+import '../widgets/safe_back_appbar.dart';
 
 class BeautifulPrivacyScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF181818),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF181818),
-        elevation: 0,
-        title: Text('Privacidad y Seguridad', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+      appBar: SafeBackAppBar(title: 'Privacidad y Seguridad'),
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(24),

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/api_service.dart';
 
 class BeautifulLoginScreen extends StatefulWidget {
   @override
@@ -135,9 +136,25 @@ class _BeautifulLoginScreenState extends State<BeautifulLoginScreen> {
                                       }
                                       if (hasError) return;
                                       setState(() { isLoading = true; });
-                                      Future.delayed(Duration(seconds: 1), () {
+                                      ApiService.login(email, password).then((resp) async {
                                         setState(() { isLoading = false; });
-                                        Navigator.pushReplacementNamed(context, '/home');
+                                        if (resp['success']) {
+                                          final data = resp['data'];
+                                          if (data != null && data['token'] != null) {
+                                            await ApiService.saveToken(data['token']);
+                                            Navigator.pushReplacementNamed(context, '/home');
+                                            return;
+                                          }
+                                          setState(() { errorMessage = 'Respuesta inválida del servidor'; });
+                                        } else {
+                                          String msg = 'Error al iniciar sesión';
+                                          final err = resp['error'];
+                                          if (err is String) msg = err;
+                                          else if (err is Map && err['msg'] != null) msg = err['msg'];
+                                          setState(() { errorMessage = msg; });
+                                        }
+                                      }).catchError((err) {
+                                        setState(() { isLoading = false; errorMessage = err.toString(); });
                                       });
                                     },
                                     child: Text('Entrar', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold, color: Colors.white, letterSpacing: 1.1)),

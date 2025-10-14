@@ -65,32 +65,45 @@ class _MainNavigationState extends State<MainNavigation> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: _screens[_selectedIndex],
-      bottomNavigationBar: Container(
-        decoration: BoxDecoration(
-          color: Color(0xFF181818),
-          border: Border(top: BorderSide(color: Color(0xFF222222), width: 1)),
-        ),
-        child: BottomNavigationBar(
-          backgroundColor: Color(0xFF181818),
-          selectedItemColor: Color(0xFF00E6E6),
-          unselectedItemColor: Colors.white54,
-          type: BottomNavigationBarType.fixed,
-          currentIndex: _selectedIndex,
-          onTap: (index) {
-            setState(() {
-              _selectedIndex = index;
-            });
-          },
-          items: [
-            BottomNavigationBarItem(icon: Icon(Icons.folder), label: 'Proyectos'),
-            BottomNavigationBarItem(icon: Icon(Icons.add_box), label: 'Crear'),
-            BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Colaborar'),
-            BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Mensajes'),
-            BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Avisos'),
-            BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Config'),
-          ],
+    return WillPopScope(
+      onWillPop: () async {
+        // If there is a route to pop, allow it (e.g. pushed screens)
+        if (Navigator.canPop(context)) return true;
+        // If we're not on the first tab, go to the first tab instead of exiting/blank
+        if (_selectedIndex != 0) {
+          setState(() => _selectedIndex = 0);
+          return false; // don't pop the navigator
+        }
+        // Otherwise allow default behavior (may close the app)
+        return true;
+      },
+      child: Scaffold(
+        body: _screens[_selectedIndex],
+        bottomNavigationBar: Container(
+          decoration: BoxDecoration(
+            color: Color(0xFF181818),
+            border: Border(top: BorderSide(color: Color(0xFF222222), width: 1)),
+          ),
+          child: BottomNavigationBar(
+            backgroundColor: Color(0xFF181818),
+            selectedItemColor: Color(0xFF00E6E6),
+            unselectedItemColor: Colors.white54,
+            type: BottomNavigationBarType.fixed,
+            currentIndex: _selectedIndex,
+            onTap: (index) {
+              setState(() {
+                _selectedIndex = index;
+              });
+            },
+            items: [
+              BottomNavigationBarItem(icon: Icon(Icons.folder), label: 'Proyectos'),
+              BottomNavigationBarItem(icon: Icon(Icons.add_box), label: 'Crear'),
+              BottomNavigationBarItem(icon: Icon(Icons.group), label: 'Colaborar'),
+              BottomNavigationBarItem(icon: Icon(Icons.message), label: 'Mensajes'),
+              BottomNavigationBarItem(icon: Icon(Icons.notifications), label: 'Avisos'),
+              BottomNavigationBarItem(icon: Icon(Icons.settings), label: 'Config'),
+            ],
+          ),
         ),
       ),
     );

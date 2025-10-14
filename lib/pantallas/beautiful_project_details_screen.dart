@@ -1,5 +1,6 @@
 
 import 'package:flutter/material.dart';
+import '../widgets/safe_back_appbar.dart';
 
 class BeautifulProjectDetailsScreen extends StatefulWidget {
   @override
@@ -18,11 +19,7 @@ class _BeautifulProjectDetailsScreenState extends State<BeautifulProjectDetailsS
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF181818),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF181818),
-        elevation: 0,
-        title: Text('Detalles del Proyecto', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+      appBar: SafeBackAppBar(title: 'Detalles del Proyecto'),
       body: Padding(
         padding: const EdgeInsets.all(24),
         child: Card(

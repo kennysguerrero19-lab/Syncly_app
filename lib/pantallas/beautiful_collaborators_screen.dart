@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/safe_back_appbar.dart';
 
 class BeautifulCollaboratorsScreen extends StatefulWidget {
   @override
@@ -83,12 +84,7 @@ class _BeautifulCollaboratorsScreenState extends State<BeautifulCollaboratorsScr
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A1A2F),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF0A1A2F),
-        elevation: 8,
-        shadowColor: Colors.blueAccent,
-        title: Text('Colaboradores', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24, letterSpacing: 1.1)),
-      ),
+      appBar: SafeBackAppBar(title: 'Colaboradores'),
       floatingActionButton: FloatingActionButton.extended(
         backgroundColor: Colors.blueAccent,
         icon: Icon(Icons.person_add, color: Colors.white),

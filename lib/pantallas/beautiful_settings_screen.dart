@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import '../widgets/safe_back_appbar.dart';
+import '../services/api_service.dart';
+
+// Settings fetches current user profile to display updated info
 
 class BeautifulSettingsScreen extends StatefulWidget {
   @override
@@ -9,21 +13,42 @@ class _BeautifulSettingsScreenState extends State<BeautifulSettingsScreen> {
   bool darkMode = true;
   bool notifications = true;
   bool publicProfile = true;
+  bool _isLoading = false;
+  String? _error;
+  String _name = '';
+  String _email = '';
+  String _bio = '';
+  String? _avatarUrl;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadProfile();
+  }
+
+  Future<void> _loadProfile() async {
+    setState(() { _isLoading = true; _error = null; });
+    final res = await ApiService.getCurrentUser();
+    if (res['success'] && res['data'] is Map) {
+      final data = res['data'] as Map<String, dynamic>;
+      final user = data['user'] ?? data;
+      setState(() {
+        _name = user['name'] ?? '';
+        _email = user['email'] ?? '';
+        _bio = user['bio'] ?? '';
+        _avatarUrl = user['avatarUrl'] ?? null;
+      });
+    } else {
+      setState(() { _error = res['error']?.toString() ?? 'No se pudo cargar perfil'; });
+    }
+    setState(() { _isLoading = false; });
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A1A2F),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF0A1A2F),
-        elevation: 8,
-        shadowColor: Colors.blueAccent,
-        leading: IconButton(
-          icon: Icon(Icons.arrow_back, color: Colors.white),
-          onPressed: () => Navigator.pop(context),
-        ),
-        title: Text('Configuración', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24, letterSpacing: 1.1)),
-      ),
+      appBar: SafeBackAppBar(title: 'Configuración'),
       body: ListView(
         padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 16),
         children: [
@@ -35,26 +60,31 @@ class _BeautifulSettingsScreenState extends State<BeautifulSettingsScreen> {
             shadowColor: Colors.blueAccent,
             child: Padding(
               padding: const EdgeInsets.all(20),
-              child: Row(
-                children: [
-                  CircleAvatar(
-                    radius: 32,
-                    backgroundColor: Colors.blueAccent,
-                    child: Icon(Icons.person, color: Colors.white, size: 36),
-                  ),
-                  SizedBox(width: 18),
-                  Expanded(
-                    child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text('knjnkk', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
-                        Text('keee@gmail.com', style: TextStyle(color: Colors.white70, fontSize: 15)),
-                        Text('Diseñadora UI/UX', style: TextStyle(color: Colors.blueAccent, fontSize: 14)),
-                      ],
-                    ),
-                  ),
-                ],
-              ),
+              child: _isLoading
+                  ? SizedBox(height: 96, child: Center(child: CircularProgressIndicator(color: Colors.blueAccent)))
+                  : _error != null
+                      ? SizedBox(height: 96, child: Center(child: Text(_error!, style: TextStyle(color: Colors.redAccent))))
+                      : Row(
+                          children: [
+                            CircleAvatar(
+                              radius: 32,
+                              backgroundColor: Colors.blueAccent,
+                              backgroundImage: _avatarUrl != null ? NetworkImage(_avatarUrl!) : null,
+                              child: _avatarUrl == null ? Icon(Icons.person, color: Colors.white, size: 36) : null,
+                            ),
+                            SizedBox(width: 18),
+                            Expanded(
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(_name, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 20)),
+                                  Text(_email, style: TextStyle(color: Colors.white70, fontSize: 15)),
+                                  Text(_bio, style: TextStyle(color: Colors.blueAccent, fontSize: 14)),
+                                ],
+                              ),
+                            ),
+                          ],
+                        ),
             ),
           ),
           SizedBox(height: 22),

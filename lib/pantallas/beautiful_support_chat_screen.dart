@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/safe_back_appbar.dart';
 
 class BeautifulSupportChatScreen extends StatefulWidget {
   @override
@@ -28,11 +29,7 @@ class _BeautifulSupportChatScreenState extends State<BeautifulSupportChatScreen>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF181818),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF181818),
-        elevation: 0,
-        title: Text('Chat con Soporte', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
-      ),
+      appBar: SafeBackAppBar(title: 'Chat con Soporte'),
       body: Column(
         children: [
           Expanded(

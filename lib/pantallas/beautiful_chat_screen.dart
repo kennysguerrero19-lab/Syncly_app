@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/safe_back_appbar.dart';
 
 class BeautifulChatScreen extends StatelessWidget {
   final List<Map<String, dynamic>> chat = [
@@ -11,12 +12,7 @@ class BeautifulChatScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Color(0xFF0A1A2F),
-      appBar: AppBar(
-        backgroundColor: Color(0xFF0A1A2F),
-        elevation: 8,
-        shadowColor: Colors.blueAccent,
-        title: Text('Chat del Proyecto', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 24, letterSpacing: 1.1)),
-      ),
+      appBar: SafeBackAppBar(title: 'Chat del Proyecto'),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
         child: ListView.builder(

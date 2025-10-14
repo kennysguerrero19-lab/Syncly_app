@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../services/api_service.dart';
 
 class BeautifulRegisterScreen extends StatefulWidget {
   @override
@@ -7,11 +8,14 @@ class BeautifulRegisterScreen extends StatefulWidget {
 
 class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
   final _formKey = GlobalKey<FormState>();
-  String? _nombre, _apellido, _correo, _password, _confirmPassword, _telefono, _fechaNacimiento, _genero;
+  String? _nombre, _apellido, _correo, _telefono, _fechaNacimiento, _genero;
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmController = TextEditingController();
   bool _showPassword = false;
   bool _showConfirmPassword = false;
-  String? _avatarUrl;
+  // avatar URL not used in register form
   bool isLoading = false;
+  String? _lastError;
 
   @override
   Widget build(BuildContext context) {
@@ -108,6 +112,7 @@ class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
                           ),
                           SizedBox(height: 16),
                           TextFormField(
+                            controller: _passwordController,
                             obscureText: !_showPassword,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock, color: Colors.blueAccent),
@@ -127,10 +132,11 @@ class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
                             ),
                             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
                             validator: (value) => value == null || value.length < 6 ? 'Mínimo 6 caracteres' : null,
-                            onSaved: (value) => _password = value,
+                            onSaved: (value) => null,
                           ),
                           SizedBox(height: 16),
                           TextFormField(
+                            controller: _confirmController,
                             obscureText: !_showConfirmPassword,
                             decoration: InputDecoration(
                               prefixIcon: Icon(Icons.lock_outline, color: Colors.blueAccent),
@@ -149,8 +155,8 @@ class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
                               ),
                             ),
                             style: TextStyle(color: Colors.white, fontWeight: FontWeight.w500),
-                            validator: (value) => value != _password ? 'Las contraseñas no coinciden' : null,
-                            onSaved: (value) => _confirmPassword = value,
+                            validator: (value) => value != _passwordController.text ? 'Las contraseñas no coinciden' : null,
+                            onSaved: (value) => null,
                           ),
                           SizedBox(height: 16),
                           TextFormField(
@@ -218,12 +224,30 @@ class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
                                         if (_formKey.currentState!.validate()) {
                                           _formKey.currentState!.save();
                                           setState(() { isLoading = true; });
-                                          Future.delayed(Duration(seconds: 1), () {
+                                          ApiService.register('$_nombre $_apellido', _correo ?? '', _passwordController.text, phone: _telefono, birthDate: _fechaNacimiento, gender: _genero).then((resp) {
                                             setState(() { isLoading = false; });
+                                            if (resp['success']) {
+                                                  ScaffoldMessenger.of(context).showSnackBar(
+                                                    SnackBar(content: Text('¡Registro exitoso! Por favor inicia sesión.', style: TextStyle(color: Colors.white)), backgroundColor: Colors.blueAccent),
+                                                  );
+                                                  // After register, go to login so user signs in
+                                                  Navigator.pushReplacementNamed(context, '/login');
+                                                } else {
+                                              String msg = 'Error al registrar';
+                                              final err = resp['error'];
+                                              if (err is String) msg = err;
+                                              else if (err is Map && err['msg'] != null) msg = err['msg'];
+                                              setState(() { _lastError = msg; });
+                                              ScaffoldMessenger.of(context).showSnackBar(
+                                                SnackBar(content: Text(msg, style: TextStyle(color: Colors.white)), backgroundColor: Colors.redAccent),
+                                              );
+                                            }
+                                          }).catchError((err) {
+                                            setState(() { isLoading = false; });
+                                            setState(() { _lastError = err.toString(); });
                                             ScaffoldMessenger.of(context).showSnackBar(
-                                              SnackBar(content: Text('¡Registro exitoso!', style: TextStyle(color: Colors.white)), backgroundColor: Colors.blueAccent),
+                                              SnackBar(content: Text('Error de conexión', style: TextStyle(color: Colors.white)), backgroundColor: Colors.redAccent),
                                             );
-                                            Navigator.pushReplacementNamed(context, '/login');
                                           });
                                         }
                                       },
@@ -231,6 +255,16 @@ class _BeautifulRegisterScreenState extends State<BeautifulRegisterScreen> {
                                     ),
                                   ),
                           ),
+                            if (_lastError != null)
+                              Padding(
+                                padding: const EdgeInsets.only(top: 12.0),
+                                child: Container(
+                                  width: double.infinity,
+                                  padding: EdgeInsets.symmetric(vertical: 10, horizontal: 12),
+                                  decoration: BoxDecoration(color: Colors.redAccent, borderRadius: BorderRadius.circular(12)),
+                                  child: Text(_lastError!, style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold)),
+                                ),
+                              ),
                           SizedBox(height: 16),
                           TextButton(
                             onPressed: () {
