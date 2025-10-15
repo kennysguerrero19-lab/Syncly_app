@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
-import 'pantallas/beautiful_splash_screen.dart'; // Importa la pantalla de animación
-import 'pantallas/beautiful_register_screen.dart';
-import 'pantallas/beautiful_project_details_screen.dart';
-import 'pantallas/beautiful_login_screen.dart';
-import 'pantallas/beautiful_projects_screen.dart';
-import 'pantallas/beautiful_create_project_screen.dart';
-import 'pantallas/beautiful_collaborators_screen.dart';
-import 'pantallas/beautiful_messages_screen.dart';
-import 'pantallas/beautiful_chat_screen.dart';
-import 'pantallas/beautiful_notifications_screen.dart';
-import 'pantallas/beautiful_settings_screen.dart';
-import 'pantallas/beautiful_profile_screen.dart';
-import 'pantallas/beautiful_privacy_screen.dart';
-import 'pantallas/beautiful_help_center_screen.dart';
-import 'pantallas/beautiful_support_chat_screen.dart';
+import 'pantallas/splash.dart'; // Importa la pantalla de animación
+import 'pantallas/register.dart';
+import 'pantallas/project_details.dart';
+import 'pantallas/login.dart';
+import 'pantallas/projects.dart';
+import 'pantallas/create_project.dart';
+import 'pantallas/collaborators.dart';
+import 'pantallas/messages.dart';
+import 'pantallas/chat.dart';
+import 'pantallas/notifications.dart';
+import 'pantallas/settings.dart';
+import 'pantallas/profile.dart';
+import 'pantallas/privacy.dart';
+import 'pantallas/help_center.dart';
+import 'pantallas/support_chat.dart';
 
 void main() {
   runApp(MainApp());
