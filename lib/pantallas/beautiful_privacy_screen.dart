@@ -70,27 +70,6 @@ class BeautifulPrivacyScreen extends StatelessWidget {
                 ),
               ),
               SizedBox(height: 28),
-              Card(
-                color: Color(0xFF142A47),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-                elevation: 8,
-                child: Padding(
-                  padding: const EdgeInsets.all(20),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text('¿Tienes dudas sobre privacidad?', style: TextStyle(color: Colors.white, fontWeight: FontWeight.bold, fontSize: 18)),
-                      SizedBox(height: 10),
-                      ElevatedButton.icon(
-                        style: ElevatedButton.styleFrom(backgroundColor: Colors.blueAccent, shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
-                        icon: Icon(Icons.email, color: Colors.white),
-                        label: Text('Contáctanos', style: TextStyle(color: Colors.white)),
-                        onPressed: () {},
-                      ),
-                    ],
-                  ),
-                ),
-              ),
             ],
           ),
         ),
