@@ -1,0 +1,16 @@
+use("syncly");
+db.createCollection("notificaciones", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_usuario", "mensaje", "tipo", "leida", "fecha"],
+      properties: {
+        id_usuario: { bsonType: "string" },
+        mensaje: { bsonType: "string" },
+        tipo: { bsonType: "string", enum: ["Asignación", "Actualización", "Recordatorio"] },
+        leida: { bsonType: "bool" },
+        fecha: { bsonType: "date" }
+      }
+    }
+  }
+});

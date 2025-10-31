@@ -1,0 +1,59 @@
+use("syncly");
+// ------------------
+// COLECCIÓN: PROYECTOS
+// ------------------
+db.createCollection("proyectos", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre", "descripcion", "estado", "colaboradores", "tareas"],
+      properties: {
+        nombre: {
+          bsonType: "string",
+          description: "Nombre del proyecto."
+        },
+        descripcion: {
+          bsonType: "string",
+          description: "Descripción breve del proyecto."
+        },
+        fecha_inicio: {
+          bsonType: "date",
+          description: "Fecha de inicio del proyecto."
+        },
+        fecha_fin: {
+          bsonType: "date",
+          description: "Fecha de finalización del proyecto."
+        },
+        estado: {
+          bsonType: "string",
+          enum: ["En progreso", "Completado", "Pendiente"],
+          description: "Estado actual del proyecto."
+        },
+        colaboradores: {
+          bsonType: "array",
+          items: {
+            bsonType: "object",
+            required: ["id_usuario", "nombre", "rol"],
+            properties: {
+              id_usuario: { bsonType: "string" },
+              nombre: { bsonType: "string" },
+              rol: { bsonType: "string" }
+            }
+          }
+        },
+        tareas: {
+          bsonType: "array",
+          items: {
+            bsonType: "object",
+            required: ["titulo", "estado"],
+            properties: {
+              titulo: { bsonType: "string" },
+              estado: { bsonType: "string", enum: ["Pendiente", "En progreso", "Completada"] },
+              prioridad: { bsonType: "string", enum: ["Alta", "Media", "Baja"] }
+            }
+          }
+        }
+      }
+    }
+  }
+});

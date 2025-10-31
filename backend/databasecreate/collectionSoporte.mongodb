@@ -1,0 +1,22 @@
+use("syncly");
+// COLECCIÓN: SOPORTE
+// ------------------
+db.createCollection("soporte", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_usuario", "asunto", "descripcion", "estado"],
+      properties: {
+        id_usuario: { bsonType: "string" },
+        asunto: { bsonType: "string" },
+        descripcion: { bsonType: "string" },
+        estado: {
+          bsonType: "string",
+          enum: ["Pendiente", "Resuelto"],
+          description: "Estado del ticket de soporte."
+        },
+        fecha_creacion: { bsonType: "date" }
+      }
+    }
+  }
+});

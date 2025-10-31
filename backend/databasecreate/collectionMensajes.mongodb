@@ -1,0 +1,20 @@
+use("syncly");
+db.createCollection("mensajes", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["id_proyecto", "id_emisor", "id_receptor", "mensaje", "fecha_envio"],
+      properties: {
+        id_proyecto: { bsonType: "string" },
+        id_emisor: { bsonType: "string" },
+        id_receptor: { bsonType: "string" },
+        mensaje: {
+          bsonType: "string",
+          description: "Contenido del mensaje."
+        },
+        fecha_envio: { bsonType: "date" },
+        leido: { bsonType: "bool" }
+      }
+    }
+  }
+});

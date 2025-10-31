@@ -1,0 +1,41 @@
+// =======================================
+//  CREACIÓN DE BASE DE DATOS SYNCLY
+// =======================================
+use("syncly");
+
+// ---------------------------------------
+// 🧍‍♂️ COLECCIÓN: USUARIOS
+// ---------------------------------------
+db.createCollection("usuarios", {
+  validator: {
+    $jsonSchema: {
+      bsonType: "object",
+      required: ["nombre", "email", "contraseña", "rol", "fecha_registro"],
+      properties: {
+        nombre: {
+          bsonType: "string",
+          description: "Debe ser una cadena de texto con el nombre del usuario."
+        },
+        email: {
+          bsonType: "string",
+          pattern: "^.+@.+\\..+$",
+          description: "Debe ser un correo electrónico válido."
+        },
+        contraseña: {
+          bsonType: "string",
+          minLength: 8,
+          description: "La contraseña debe tener al menos 8 caracteres."
+        },
+        rol: {
+          bsonType: "string",
+          enum: ["admin", "usuario", "colaborador"],
+          description: "Define el tipo de usuario dentro del sistema."
+        },
+        fecha_registro: {
+          bsonType: "date",
+          description: "Fecha de registro del usuario."
+        }
+      }
+    }
+  }
+});
